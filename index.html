@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Scam Detector</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f6f9;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        textarea {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .alert {
+            margin: 20px auto;
+            padding: 15px;
+            width: 60%;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .safe {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .scam {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        #chartContainer {
+            width: 50%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>🚨 AI Scam Message Detector</h2>
+
+    <textarea id="message" rows="5" placeholder="Paste message here..."></textarea><br><br>
+
+    <button onclick="checkScam()">Analyze</button>
+
+    <div id="alertBox"></div>
+
+    <div id="chartContainer">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <p id="explanation"></p>
+    
+</div>
+
+<script>
+let chart;
+
+async function checkScam() {
+    let message = document.getElementById("message").value;
+
+    let response = await fetch("http://127.0.0.1:5000/analyze", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
+
+    let data = await response.json();
+
+    // ALERT BOX
+    let alertBox = document.getElementById("alertBox");
+
+    if (data.score > 60) {
+        alertBox.className = "alert scam";
+        alertBox.innerHTML = "🚨 High Risk Scam Detected!";
+    } else {
+        alertBox.className = "alert safe";
+        alertBox.innerHTML = "✅ Message Looks Safe";
+    }
+
+    // EXPLANATION
+    document.getElementById("explanation").innerText = data.explanation;
+
+    // CHART
+    let scamScore = data.score;
+    let safeScore = 100 - scamScore;
+
+    if (chart) {
+        chart.destroy();
+    }
+
+    let ctx = document.getElementById("myChart").getContext("2d");
+
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Scam", "Safe"],
+            datasets: [{
+                label: "Probability (%)",
+                data: [scamScore, safeScore]
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>

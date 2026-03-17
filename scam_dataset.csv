@@ -1,0 +1,22 @@
+text,label
+"Congratulations! You have won a lottery of ₹10,00,000. Click here now!",scam
+"Your bank account will be blocked. Verify your OTP immediately.",scam
+"Limited time offer! Get free iPhone now. Visit link.",scam
+"Urgent! Update your KYC to avoid account suspension.",scam
+"You have been selected for a prize. Claim now!",scam
+"Win cash prizes easily. Click and register now!",scam
+"Your ATM card is blocked. Provide OTP to reactivate.",scam
+"Get rich quick by investing in this scheme.",scam
+"Dear user, your account has suspicious activity. Login now.",scam
+"Click here to claim your reward before it expires.",scam
+
+"Hey, are we meeting today?",ham
+"Please submit your assignment by tomorrow.",ham
+"Let's catch up over coffee this weekend.",ham
+"Your order has been shipped and will arrive soon.",ham
+"Happy birthday! Have a great day!",ham
+"Reminder: Your class starts at 10 AM.",ham
+"Call me when you're free.",ham
+"Can you send me the notes?",ham
+"Your package is out for delivery.",ham
+"Meeting rescheduled to 3 PM.",ham
